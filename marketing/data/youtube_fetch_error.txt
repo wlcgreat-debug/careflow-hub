@@ -1,0 +1,22 @@
+YouTube channel stats fetch FAILED
+Timestamp (UTC): 2026-08-19
+Session branch: claude/ai-exposure-geo-strategy-iudc00
+
+Error: Environment variable YOUTUBE_API_KEY is not set in this session's container.
+
+Details:
+- Verified with `[ -n "$YOUTUBE_API_KEY" ]` in two separate fresh shells: both reported the variable as missing/empty.
+- No YouTube-related variable is present in the shell environment.
+- No API call was attempted (nothing was sent to the YouTube Data API).
+
+Likely cause:
+Environment variables for Claude Code remote sessions are injected when the
+container is provisioned. If YOUTUBE_API_KEY was added to the environment
+configuration AFTER this session's container started, the running container
+does not pick it up.
+
+Suggested fix:
+1. Confirm YOUTUBE_API_KEY is saved in the Claude Code environment settings
+   (environment variables section) for this environment.
+2. Start a NEW session in that environment (fresh containers inherit the
+   updated variables) and re-run the data collection task.
